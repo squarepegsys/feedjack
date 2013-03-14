@@ -8,7 +8,7 @@ models.py
 """
 
 from django.db import models
-from django.utils.translation import ugettext_lazy as _ 
+from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import smart_unicode
 
 from feedjack import fjcache
@@ -20,12 +20,12 @@ SITE_ORDERBY_CHOICES = (
 
 class Link(models.Model):
     name = models.CharField(_('name'), max_length=100, unique=True)
-    link = models.URLField(_('link'), verify_exists=True)
+    link = models.URLField(_('link'), )
 
     class Meta:
         verbose_name = _('link')
         verbose_name_plural = _('links')
-        
+
     class Admin:
         pass
 
@@ -53,7 +53,7 @@ class Site(models.Model):
         choices=SITE_ORDERBY_CHOICES)
     tagcloud_levels = models.IntegerField(_('tagcloud level'), default=5)
     show_tagcloud = models.BooleanField(_('show tagcloud'), default=True)
-    
+
     use_internal_cache = models.BooleanField(_('use internal cache'), default=True)
     cache_duration = models.IntegerField(_('cache duration'), default=60*60*24,
         help_text=_('Duration in seconds of the cached pages and data.') )
@@ -61,7 +61,7 @@ class Site(models.Model):
     links = models.ManyToManyField(Link, verbose_name=_('links'),
       null=True, blank=True)
     template = models.CharField(_('template'), max_length=100, null=True,
-      blank=True, 
+      blank=True,
       help_text=_('This template must be a directory in your feedjack '
         'templates directory. Leave blank to use the default template.') )
 
@@ -129,7 +129,7 @@ class Tag(models.Model):
         verbose_name = _('tag')
         verbose_name_plural = _('tags')
         ordering = ('name',)
-    
+
     def __unicode__(self):
         return self.name
 
