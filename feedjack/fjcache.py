@@ -6,7 +6,7 @@ Gustavo Picón
 fjcache.py
 """
 
-import md5
+import hashlib
 
 from django.core.cache import cache
 
@@ -21,7 +21,7 @@ T_META = 3
 def str2md5(key):
     """ Returns the md5 hash of a string.
     """
-    ctx = md5.new()
+    ctx = hashlib.md5()
     ctx.update(key.encode('utf-8'))
     return ctx.hexdigest()
 
@@ -54,7 +54,7 @@ def cache_get(site_id, key):
 
 def cache_set(site, key, data):
     """ Sets cache data for a site.
-    
+
     All keys related to a site are stored in a meta key. This key is per-site.
     """
     tkey = getkey(T_ITEM, site.id, key)
